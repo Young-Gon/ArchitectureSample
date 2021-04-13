@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragment_work"
+        android:icon="@drawable/ic_gnb_01_imagelist"
+        android:title="@string/gnb_title_image_list" />
+
+    <item
+        android:id="@+id/fragment_news"
+        android:icon="@drawable/ic_gnb_02_profile"
+        android:title="@string/gnb_title_profile" />
+</menu>
