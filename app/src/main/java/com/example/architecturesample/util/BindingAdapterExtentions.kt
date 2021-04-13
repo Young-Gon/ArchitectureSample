@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.adapters.ListenerUtil
+import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -36,6 +38,13 @@ fun <T> RecyclerView.setItems(items: List<T>?) {
         throw NullPointerException("layoutManager가 없습니다")
 
     (this.adapter as? ListAdapter<T, *>)?.run {
+        submitList(items)
+    }
+}
+
+@BindingAdapter("items")
+fun <T> ViewPager2.setItems(items: PagedList<T>?) {
+    (this.adapter as? PagedListAdapter<T, *>)?.run {
         submitList(items)
     }
 }

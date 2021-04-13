@@ -22,6 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:items="@{vm.images}"
             app:onPageScrollStateChanged="@{(position) -> vm.onPageSelected(position)}"
             tools:listitem="@layout/item_viewpager_image"/>
         <FrameLayout
@@ -42,12 +43,15 @@
             android:ellipsize="end"
             android:gravity="end"
             android:maxLines="2"
+            android:text="@{vm.images[vm.currentPosition].author}"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/frameLayout2"
             app:layout_constraintEnd_toEndOf="@+id/frameLayout2"
             app:layout_constraintStart_toStartOf="@+id/frameLayout2"
             app:layout_constraintTop_toTopOf="@+id/frameLayout2"
+            app:addLink="@{vm.images[vm.currentPosition].author}"
+            app:pattern="@{vm.images[vm.currentPosition].url}"
             tools:text="Image Title" />
 
         <androidx.constraintlayout.widget.Group

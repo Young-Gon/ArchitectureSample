@@ -1,47 +1,64 @@
 package com.example.architecturesample.repository
 
 import androidx.lifecycle.LiveData
-import androidx.paging.*
+import androidx.paging.DataSource
+import androidx.paging.ItemKeyedDataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PagedList
 import com.example.architecturesample.model.database.dao.ImageDataDao
 import com.example.architecturesample.model.network.response.ImageData
-import timber.log.Timber
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 interface GalleryRepository {
-    fun loadGallery(itemId: Int): LiveData<PagingData<ImageData>>
+    fun loadGallery(itemId:Int,scope: CoroutineScope): LiveData<PagedList<ImageData>>
 }
 
-class GalleryRepositoryImpl(
+class GalleryRepositoryImpl (
     private val dao: ImageDataDao,
 ) : GalleryRepository {
-    override fun loadGallery(itemId: Int): LiveData<PagingData<ImageData>> {
-        return Pager(PagingConfig(pageSize = 10, maxSize = 40)) {
-            GalleryPagingSource(dao, itemId)
-        }.liveData
-    }
+    override fun loadGallery(itemId:Int, scope: CoroutineScope) = LivePagedListBuilder(
+        ViewPagerDataSource.Factory(
+            dao,
+            scope,
+        ), 10
+    ).setInitialLoadKey(itemId).build()
 }
 
-class GalleryPagingSource(
+class ViewPagerDataSource(
     private val dao: ImageDataDao,
-    private val initialKey: Int,
-) : PagingSource<Int, ImageData>() {
+    private val scope: CoroutineScope,
+) : ItemKeyedDataSource<Int, ImageData>() {
 
-    override fun getRefreshKey(state: PagingState<Int, ImageData>) =
-        state.anchorPosition?.let { anchorPosition ->
-            state.closestItemToPosition(anchorPosition)?.id
+    class Factory(
+        private val dao: ImageDataDao,
+        private val viewModelScope: CoroutineScope,
+    ) : DataSource.Factory<Int, ImageData>() {
+        override fun create(): DataSource<Int, ImageData> {
+            return ViewPagerDataSource(dao, viewModelScope)
         }
+    }
 
-    override suspend fun load(params: LoadParams<Int>): PagingSource.LoadResult<Int, ImageData> {
-        val key = params.key ?: initialKey
-        Timber.d("key=$key")
-        val result = when (params) {
-            is LoadParams.Refresh ->
-                listOf(dao.findInitialImage(key))
-            is LoadParams.Prepend ->
-                dao.findPrevImages(key, params.loadSize)
-            is LoadParams.Append ->
-                dao.findNextImages(key, params.loadSize).asReversed()
+    override fun getKey(item: ImageData) = item.id
+
+    override fun loadInitial(
+        params: LoadInitialParams<Int>,
+        callback: LoadInitialCallback<ImageData>
+    ) {
+        scope.launch {
+            callback.onResult(listOf(dao.findInitialImage(params.requestedInitialKey ?: 0)))
         }
-        return LoadResult.Page(result, result.first().id, result.last().id)
+    }
+
+    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<ImageData>) {
+        scope.launch {
+            callback.onResult(dao.findPrevImages(params.key, params.requestedLoadSize))
+        }
+    }
+
+    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<ImageData>) {
+        scope.launch {
+            callback.onResult(dao.findNextImages(params.key, params.requestedLoadSize).asReversed())
+        }
     }
 }

@@ -97,10 +97,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-    // paging 3
-    def paging_version = "3.0.0-beta03"
-
-    implementation "androidx.paging:paging-runtime:$paging_version"
+    // paging 2
+    implementation "androidx.paging:paging-runtime-ktx:2.1.2"
 
     // timber
     implementation 'com.jakewharton.timber:timber:4.7.1'

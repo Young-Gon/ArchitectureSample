@@ -26,7 +26,7 @@ class GalleryFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.gallery_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_gallery, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class GalleryFragment : Fragment() {
         (binding.frameLayout2.layoutParams as ConstraintLayout.LayoutParams).bottomMargin =
                 getNavigationbarHeight()
 
-        val adapter = DataBindingPagingDataAdapter<ImageData, ViewpagerImageItemBinding>(
+        binding.viewPager.adapter = DataBindingPagingDataAdapter<ImageData, ViewpagerImageItemBinding>(
                 layoutResId = R.layout.item_viewpager_image,
                 bindingVariableId = BR.item,
                 diffCallback = object : DiffUtil.ItemCallback<ImageData>() {
@@ -48,16 +48,7 @@ class GalleryFragment : Fragment() {
                             oldItem == newItem
                 },
                 lifecycleOwner = viewLifecycleOwner
-        ).also { binding.viewPager.adapter = it }
-
-        viewModel.images.observe(viewLifecycleOwner) { pagingData ->
-            adapter.submitData(lifecycle, pagingData)
-        }
-        /*lifecycleScope.launch {
-            viewModel.images.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
-            }
-        }*/
+        )
     }
 
     /**

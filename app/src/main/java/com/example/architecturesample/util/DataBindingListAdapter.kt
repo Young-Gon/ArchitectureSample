@@ -6,7 +6,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
-import androidx.paging.PagingDataAdapter
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -88,13 +88,13 @@ class DataBindingListAdapter<T, V: ViewDataBinding>(
 		holder.onBindViewHolder(getItem(position))
 }
 
-class DataBindingPagingDataAdapter<T: Any, V: ViewDataBinding>(
+class DataBindingPagingDataAdapter<T, V: ViewDataBinding>(
 		@LayoutRes private val layoutResId: Int,
 		private val bindingVariableId: Int? = null,
 		diffCallback: DiffUtil.ItemCallback<T>,
 		private val lifecycleOwner: LifecycleOwner? = null,
 		private val init: ((V) -> Unit)? = null
-) : PagingDataAdapter<T, RecyclerViewHolder<T>>(diffCallback) {
+) : PagedListAdapter<T, RecyclerViewHolder<T>>(diffCallback) {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createRecyclerViewHolder<T, V>(
 			layoutResId = layoutResId,
 			bindingVariableId = bindingVariableId,
