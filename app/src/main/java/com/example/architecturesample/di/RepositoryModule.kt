@@ -1,9 +1,6 @@
 package com.example.architecturesample.di
 
-import com.example.architecturesample.repository.GalleryRepository
-import com.example.architecturesample.repository.GalleryRepositoryImpl
-import com.example.architecturesample.repository.ImageListRepository
-import com.example.architecturesample.repository.ImageListRepositoryImpl
+import com.example.architecturesample.repository.*
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
@@ -15,4 +12,8 @@ val repositoryModule = module {
     factory {
         GalleryRepositoryImpl(get())
     } bind GalleryRepository::class
+
+    factory {
+        BoardRepositoryImpl(get())
+    } bind BoardRepository::class
 }

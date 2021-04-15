@@ -1,9 +1,7 @@
 package com.example.architecturesample.ui.fragment.imagelist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
@@ -18,28 +16,19 @@ import com.gondev.imagelist.util.dataBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class ImageListFragment : Fragment() {
+class ImageListFragment : Fragment(R.layout.fragment_image_list) {
 
     private val binding: ImageListBinding by dataBinding()
     private val viewModel: ImageListViewModel by viewModel()
 
-    /**
-     * Inflate the layout for this fragment
-     */
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ) =
-        inflater.inflate(R.layout.fragment_image_list, container, false)
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.vm=viewModel
-        binding.recyclerView.adapter=DataBindingListAdapter(
+        binding.vm = viewModel
+        binding.recyclerView.adapter = DataBindingListAdapter<ImageData, ImageItemBinding>(
             layoutResId = R.layout.item_image,
             bindingVariableId = BR.item,
-            diffCallback = object : DiffUtil.ItemCallback<ImageData>(){
+            diffCallback = object : DiffUtil.ItemCallback<ImageData>() {
                 override fun areItemsTheSame(oldItem: ImageData, newItem: ImageData) =
                     oldItem.id == newItem.id
 
@@ -48,11 +37,13 @@ class ImageListFragment : Fragment() {
 
             },
             viewLifecycleOwner,
-        ){ itemBinding : ImageItemBinding ->
-            itemBinding.vm=viewModel
-            itemBinding.itemClickListener = ItemClickListener { view, item ->
+        ) {
+            vm = viewModel
+            itemClickListener = ItemClickListener { view, item ->
                 Timber.i("Item Clicked: ${item.id}")
-                view.findNavController().navigate(ImageListFragmentDirections.actionImageListFragmentToGalleryFragment(item.id))
+                view.findNavController().navigate(
+                    ImageListFragmentDirections.actionImageListFragmentToGalleryFragment(item.id)
+                )
             }
         }
     }

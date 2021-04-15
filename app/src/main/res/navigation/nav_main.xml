@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main"
-    app:startDestination="@id/imageListFragment">
+    app:startDestination="@id/fragment_image_list">
 
     <fragment
-        android:id="@+id/imageListFragment"
+        android:id="@+id/fragment_image_list"
         android:name="com.example.architecturesample.ui.fragment.imagelist.ImageListFragment"
         android:label="ImageListFragment" >
         <action
@@ -18,5 +18,22 @@
         <argument
             android:name="itemId"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_board"
+        android:name="com.example.architecturesample.ui.fragment.board.BoardFragment"
+        android:label="BoardFragment" >
+        <action
+            android:id="@+id/action_fragment_board_to_createBoardFragment"
+            app:destination="@id/create_board_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/create_board_fragment"
+        android:name="com.example.architecturesample.ui.fragment.board.create.CreateBoardFragment"
+        android:label="CreateBoardFragment" >
+        <argument
+            android:name="postId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

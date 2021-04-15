@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="BoardItemBinding">
+        <import type="com.example.architecturesample.model.network.response.PostData" />
+        <import type="java.time.format.DateTimeFormatter" />
+
+        <variable
+            name="post"
+            type="PostData" />
+        <variable
+            name="vm"
+            type="com.example.architecturesample.ui.fragment.board.BoardViewModel" />
+        <variable
+            name="ItemClickListener"
+            type="com.example.architecturesample.util.ItemClickListener&lt;PostData>" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{(v) -> ItemClickListener.onItemClicked(v, post)}"
+        tools:showIn="@layout/fragment_board">
+        <TextView
+            android:id="@+id/textViewPostTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{post.title}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <TextView
+            android:id="@+id/textViewPostTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{post.date.format(DateTimeFormatter.ofPattern(`yyyy-MM-dd`))}"
+            app:layout_constraintTop_toBottomOf="@id/textViewPostTitle"
+            app:layout_constraintStart_toStartOf="@id/textViewPostTitle"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

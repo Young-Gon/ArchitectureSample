@@ -40,7 +40,8 @@ import androidx.recyclerview.widget.RecyclerView
  *
  *             },
  *             this, // lifecycleOwner 를 전달하여 View 내부의 데이터 변화 관찰
- *         ){ itemBinding: ItemBinding ->  // 아이템 바인딩을 제외한 바인딩 초기화 진행
+ *         ){
+ *             // 아이템 바인딩을 제외한 바인딩 초기화 진행
  *             itemBinding.vm = viewModel
  *         }
  * ```
@@ -74,7 +75,7 @@ class DataBindingListAdapter<T, V: ViewDataBinding>(
 	private val bindingVariableId: Int? = null,
 	diffCallback: DiffUtil.ItemCallback<T>,
 	private val lifecycleOwner: LifecycleOwner? = null,
-	private val init: ((V) -> Unit)? = null
+	private val init: (V.() -> Unit)? = null
 ) : ListAdapter<T, RecyclerViewHolder<T>>(diffCallback) {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createRecyclerViewHolder<T, V>(
 		layoutResId = layoutResId,
@@ -88,12 +89,12 @@ class DataBindingListAdapter<T, V: ViewDataBinding>(
 		holder.onBindViewHolder(getItem(position))
 }
 
-class DataBindingPagingDataAdapter<T, V: ViewDataBinding>(
+class DataBindingPagedListAdapter<T, V: ViewDataBinding>(
 		@LayoutRes private val layoutResId: Int,
 		private val bindingVariableId: Int? = null,
 		diffCallback: DiffUtil.ItemCallback<T>,
 		private val lifecycleOwner: LifecycleOwner? = null,
-		private val init: ((V) -> Unit)? = null
+		private val init: (V.() -> Unit)? = null
 ) : PagedListAdapter<T, RecyclerViewHolder<T>>(diffCallback) {
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = createRecyclerViewHolder<T, V>(
 			layoutResId = layoutResId,
@@ -112,7 +113,7 @@ fun <T, V: ViewDataBinding> createRecyclerViewHolder(
 	bindingVariableId: Int? = null,
 	lifecycleOwner: LifecycleOwner?=null,
 	parent: ViewGroup,
-	init: ((V) -> Unit)?
+	init: (V.() -> Unit)?
 ) = RecyclerViewHolder<T>(
 	(DataBindingUtil.inflate(
 		LayoutInflater.from(parent.context),

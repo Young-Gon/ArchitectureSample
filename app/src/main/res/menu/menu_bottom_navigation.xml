@@ -2,12 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fragment_work"
+        android:id="@+id/fragment_image_list"
         android:icon="@drawable/ic_gnb_01_imagelist"
         android:title="@string/gnb_title_image_list" />
 
     <item
-        android:id="@+id/fragment_news"
-        android:icon="@drawable/ic_gnb_02_profile"
+        android:id="@+id/fragment_board"
+        android:icon="@drawable/ic_gnb_02_list"
+        android:title="@string/gnb_title_board" />
+
+    <item
+        android:id="@+id/fragment_profile"
+        android:icon="@drawable/ic_gnb_03_profile"
         android:title="@string/gnb_title_profile" />
 </menu>

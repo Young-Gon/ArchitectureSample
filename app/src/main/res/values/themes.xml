@@ -18,4 +18,13 @@
         <item name="colorPrimary">@color/active_tab_color</item>
         <item name="android:textColorSecondary">@color/inactive_tab_color</item>
     </style>
+
+    <style name="Theme.ArchitectureSample.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ArchitectureSample.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ArchitectureSample.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

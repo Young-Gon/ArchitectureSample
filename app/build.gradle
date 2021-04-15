@@ -28,6 +28,9 @@ android {
         }
     }
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -52,20 +55,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Koin for Android - Scope feature
-    // include koin-android-scope & koin-android
-    /*def koin_version = '2.2.2'
-    implementation "io.insert-koin:koin-android-ext:$koin_version"
-    // Koin AndroidX Scope features
-    implementation "org.koin:koin-androidx-scope:$koin_version"
-    // Koin AndroidX ViewModel features
-    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
-    // Koin AndroidX Fragment features
-    implementation "org.koin:koin-androidx-fragment:$koin_version"
-    // Koin AndroidX Experimental features
-    implementation "org.koin:koin-androidx-ext:$koin_version"
-    // Kotlin
-    implementation "androidx.savedstate:savedstate-ktx:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1"*/
     def koin_version= "3.0.1-beta-2"
     // Koin main features for Android (Scope,ViewModel ...)
     implementation "io.insert-koin:koin-android:$koin_version"
@@ -110,4 +99,8 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
     annotationProcessor "com.github.bumptech.glide:compiler:${GLIDE_VERSION}"
     implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+
+    // Desugaring
+    // https://developer.android.com/studio/write/java8-support#library-desugaring
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 }

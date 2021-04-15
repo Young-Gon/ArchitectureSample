@@ -29,8 +29,8 @@ interface ImageDataDao {
     suspend fun findInitialImage(id: Int): ImageData
 
     @Query("SELECT * FROM image_data WHERE id < :key ORDER BY id DESC LIMIT :requestedLoadSize")
-    suspend fun findNextImages(key: Int, requestedLoadSize: Int): MutableList<ImageData>
+    suspend fun findNextImages(key: Int, requestedLoadSize: Int): List<ImageData>
 
     @Query("SELECT * FROM image_data WHERE :key < id ORDER BY id ASC LIMIT :requestedLoadSize")
-    suspend fun findPrevImages(key: Int, requestedLoadSize: Int): MutableList<ImageData>
+    suspend fun findPrevImages(key: Int, requestedLoadSize: Int): List<ImageData>
 }
