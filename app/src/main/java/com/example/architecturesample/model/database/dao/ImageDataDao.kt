@@ -13,14 +13,14 @@ interface ImageDataDao {
     @Query("SELECT * FROM image_data")
     fun findAll(): LiveData<List<ImageData>>
 
-    @Insert
-    suspend fun insertAll(entities: List<ImageDataEntity>)
+    @Insert(entity = ImageDataEntity::class)
+    suspend fun insertAll(entities: List<ImageData>)
 
     @Query("DELETE FROM image_data")
     suspend fun deleteAll()
 
     @Transaction
-    suspend fun refreshAll(entities: List<ImageDataEntity>){
+    suspend fun refreshAll(entities: List<ImageData>){
         deleteAll()
         insertAll(entities)
     }

@@ -9,12 +9,12 @@ import java.io.StringWriter
 sealed class NetworkState<T>(val data:T?) {
 	class Loading<T>(data:T?) : NetworkState<T>(data)
 
-	class Success<T>(data:T) : NetworkState<T>(data)
+	class Success<T>(data:T?) : NetworkState<T>(data)
 
-	class Error<T>(data:T?, val throwable: Throwable) : NetworkState<T>(data){
+	class Error<T>(data:T?, val throwable: Throwable?) : NetworkState<T>(data){
 		fun getStackTrace(): String {
 			val stringWriter = StringWriter()
-			throwable.printStackTrace(PrintWriter(stringWriter))
+			throwable?.printStackTrace(PrintWriter(stringWriter))
 			return stringWriter.toString()
 		}
 	}
@@ -24,6 +24,6 @@ sealed class NetworkState<T>(val data:T?) {
 
 		fun <T> success(data:T) = Success(data)
 
-		fun <T> error(data:T?, throwable: Throwable) = Error(data, throwable)
+		fun <T> error(data:T?, throwable: Throwable?) = Error(data, throwable)
 	}
 }

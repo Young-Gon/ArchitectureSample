@@ -1,5 +1,7 @@
 package com.example.architecturesample.di
 
+import com.example.architecturesample.ui.fragment.board.BoardViewModel
+import com.example.architecturesample.ui.fragment.board.create.CreateBoardViewModel
 import com.example.architecturesample.ui.fragment.gallery.GalleryViewModel
 import com.example.architecturesample.ui.fragment.imagelist.ImageListViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -11,6 +13,8 @@ import org.koin.dsl.module
 val viewModelModule = module {
     viewModel { ImageListViewModel(get()) }
     viewModel { GalleryViewModel(get(), get()) }
+    viewModel { BoardViewModel(get()) }
+    viewModel { CreateBoardViewModel( get(), get()) }
     /*scope<GalleryFragment>{
         viewModel<GalleryViewModel>()
     }*/

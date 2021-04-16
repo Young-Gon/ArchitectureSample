@@ -26,9 +26,7 @@ class ImageListRepositoryImpl(
             val imageList=api.requestImageList()
             disposable.dispose()
 
-            dao.refreshAll(imageList.map {
-                it.toEntity()
-            })
+            dao.refreshAll(imageList)
 
             emitSource(dao.findAll().map{
                 NetworkState.success(it)

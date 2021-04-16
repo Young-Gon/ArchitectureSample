@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_board">
 
     <data class="BoardItemBinding">
         <import type="com.example.architecturesample.model.network.response.PostData" />
@@ -20,13 +21,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:onClick="@{(v) -> ItemClickListener.onItemClicked(v, post)}"
-        tools:showIn="@layout/fragment_board">
+        android:clickable="true"
+        android:focusable="true">
         <TextView
             android:id="@+id/textViewPostTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
             android:text="@{post.title}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -34,8 +38,14 @@
             android:id="@+id/textViewPostTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{post.date.format(DateTimeFormatter.ofPattern(`yyyy-MM-dd`))}"
+            android:text="@{post.createdAt.format(DateTimeFormatter.ofPattern(`yyyy-MM-dd`))}"
             app:layout_constraintTop_toBottomOf="@id/textViewPostTitle"
             app:layout_constraintStart_toStartOf="@id/textViewPostTitle"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/textViewPostTime"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

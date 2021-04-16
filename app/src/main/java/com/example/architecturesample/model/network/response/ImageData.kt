@@ -1,6 +1,5 @@
 package com.example.architecturesample.model.network.response
 
-import com.example.architecturesample.model.database.entity.ImageDataEntity
 import kotlinx.serialization.Serializable
 
 /**
@@ -20,13 +19,4 @@ data class ImageData(
     val height: Int,
     val url: String,
     val download_url: String,
-) {
-    fun toEntity() = ImageDataEntity(
-        id = id,
-        author = author,
-        width = width,
-        height = height,
-        url = url,
-        download_url = download_url
-    )
-}
+)

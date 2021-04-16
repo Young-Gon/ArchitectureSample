@@ -6,9 +6,10 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "post_data")
 data class PostDataEntity(
-    @PrimaryKey
-    val id: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int=0,
     val title: String,
     val content: String,
-    val date: LocalDateTime,
+    val createdAt: LocalDateTime,
+    val modifiedAt: LocalDateTime,
 )
